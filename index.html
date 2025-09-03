@@ -76,17 +76,13 @@
   <!--  パラメーターを変更して、HTML ページの文字コードを指定してください。                                    -->
   <!--  ----------------------------------------------------------------------  -->
   
-  <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
-  <script src="https://www.google.com/recaptcha/api.js"></script>
-  <script>
-  function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
-  </script>
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
   <!--  ----------------------------------------------------------------------  -->
 </head>
 <body>
   <div class="form-wrapper">
     <h1>大阪タイル 注文フォーム</h1>
-    <!--  ----------------------------------------------------------------------  -->
+ <!--  ----------------------------------------------------------------------  -->
 <!--  次の <FORM> 要素をページに追加してください。                                              -->
 <!--  ----------------------------------------------------------------------  -->
 
@@ -147,8 +143,6 @@
 ★数量:<input  id="00Nd50000067Kv5" name="00Nd50000067Kv5" size="20" type="text" /><br>
 
 ★その他ご要望:<input  id="00Nd50000067Uab" maxlength="255" name="00Nd50000067Uab" size="20" type="text" /><br>
-
-<div class="g-recaptcha" data-sitekey="test"></div><br>
 <input type="submit" name="注文する">
 
 </form>
