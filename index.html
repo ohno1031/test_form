@@ -5,59 +5,80 @@
   <title>大阪タイル 注文フォーム</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #f7f7f7;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #1f2937, #0f172a);
       margin: 0;
-      padding: 20px;
+      padding: 40px;
+      color: #333;
     }
-    .container {
+    .form-wrapper {
       max-width: 650px;
       margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      background: #ffffff;
+      padding: 40px 35px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      animation: fadeIn 0.6s ease;
     }
     h1 {
       text-align: center;
-      color: #333;
+      color: #1e3a8a;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
     }
     label {
       display: block;
-      margin-top: 12px;
-      font-weight: bold;
+      margin-top: 18px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1f2937;
     }
     input, select, textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background-color: #f9fafb;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
     }
     button {
-      margin-top: 20px;
-      padding: 12px;
+      margin-top: 28px;
+      padding: 14px;
       width: 100%;
-      background: #0066cc;
-      color: white;
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      color: #fff;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     button:hover {
-      background: #004d99;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="form-wrapper">
     <h1>大阪タイル 注文フォーム</h1>
     <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 
-      <!-- Salesforce組織のID（必ず本番環境のものに差し替え） -->
+      <!-- Salesforce組織ID（差し替え必須） -->
       <input type="hidden" name="oid" value="XXXXXXXXXXXXXXXXXXXXXXX">
-      <!-- 完了後にリダイレクトするURL -->
       <input type="hidden" name="retURL" value="https://www.osaka-tile.co.jp/thanks.html">
 
       <label for="company">会社名</label>
@@ -73,19 +94,19 @@
       <input id="phone" maxlength="40" name="phone" type="text">
 
       <label for="category">商品カテゴリ</label>
-      <select id="category" name="00NXXXXXXXXXXXX" required> <!-- ★カテゴリ用のカスタム項目API名 -->
+      <select id="category" name="00NXXXXXXXXXXXX" required>
         <option value="">選択してください</option>
         <option value="ハイグレードタイル">ハイグレードタイル</option>
         <option value="ベーシックグレードタイル">ベーシックグレードタイル</option>
       </select>
 
       <label for="product">商品名</label>
-      <select id="product" name="00NYYYYYYYYYYYY" required> <!-- ★商品名用のカスタム項目API名 -->
+      <select id="product" name="00NYYYYYYYYYYYY" required>
         <option value="">カテゴリを選択してください</option>
       </select>
 
       <label for="quantity">数量</label>
-      <input id="quantity" name="00NZZZZZZZZZZZZ" type="number" min="1" required> <!-- ★数量カスタム項目 -->
+      <input id="quantity" name="00NZZZZZZZZZZZZ" type="number" min="1" required>
 
       <label for="details">その他ご要望</label>
       <textarea id="details" name="description" rows="4"></textarea>
@@ -95,23 +116,22 @@
   </div>
 
   <script>
-    // カテゴリと商品リストの連動処理
+    // カテゴリと商品名の連動
     const productOptions = {
       "ハイグレードタイル": ["マーズ", "ハードウッド", "ウォータープロテクト"],
       "ベーシックグレードタイル": ["カンキョー", "モダン", "アーバン", "ナチュラル", "デュラビティ", "ビビッド"]
     };
-
     const categorySelect = document.getElementById("category");
     const productSelect = document.getElementById("product");
 
-    categorySelect.addEventListener("change", function() {
-      const selectedCategory = categorySelect.value;
+    categorySelect.addEventListener("change", () => {
+      const selected = categorySelect.value;
       productSelect.innerHTML = '<option value="">選択してください</option>';
-      if (productOptions[selectedCategory]) {
-        productOptions[selectedCategory].forEach(product => {
+      if (productOptions[selected]) {
+        productOptions[selected].forEach(p => {
           const option = document.createElement("option");
-          option.value = product;
-          option.textContent = product;
+          option.value = p;
+          option.textContent = p;
           productSelect.appendChild(option);
         });
       }
